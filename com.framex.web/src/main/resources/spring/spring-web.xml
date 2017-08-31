@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+	<!-- 配置SpringMVC -->
+	<!-- 1.开启SpringMVC注解模式 -->
+	<!-- 简化配置： 
+		(1)自动注册DefaultAnootationHandlerMapping,AnotationMethodHandlerAdapter 
+		(2)提供一些列：数据绑定，数字和日期的format @NumberFormat, @DateTimeFormat, xml,json默认读写支持 
+	-->
+	<!-- <mvc:annotation-driven /> -->
+	<!-- 已经使用了component-scan，可以省略 -->
+	<!-- <context:annotation-config/> -->
+	
+	
+	
+	<!-- 2.静态资源映射和html页面解析 -->
+	<!-- <mvc:resources location="/WEB-INF/js/" mapping="/js/**"/>
+	<mvc:resources location="/WEB-INF/css/" mapping="/css/**"/>
+	<mvc:resources location="/WEB-INF/img/" mapping="/img/**"/>
+	<mvc:resources location="/WEB-INF/video/" mapping="/video/**"/>
+	<mvc:resources location="/WEB-INF/fonts/" mapping="/fonts/**"/>
+	<mvc:resources location="/WEB-INF/pages/" mapping="/pages/**"/> -->
+	
+	<!-- <bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/pages/" />
+		<property name="suffix" value="" />
+		<property name="contentType" value="text/html"></property>  
+	</bean> -->
+	<!-- <mvc:default-servlet-handler/> -->
+	
+	<!-- 先要加载applicationcontextutil -->
+	<bean id="applicationContextUtil" class="org.framex.core.ApplicationContextUtil"></bean>
+	<!-- 确保dispatcherServlet加载这个自定义的handlermapping，spring有bean name的要求 -->
+	<bean id="handlerMapping" class="org.framex.core.handlermapping.FrameXHandlerMapping"></bean>
+	<bean id="handlerAdapter" class="org.framex.core.handleradapter.FrameXHandlerAdapter"></bean>
+	
+	<mvc:resources location="/WEB-INF/css/" mapping="/css/**"/>
+	<mvc:resources location="/WEB-INF/js/" mapping="/js/**"/>
+	<mvc:resources location="/WEB-INF/img/" mapping="/img/**"/>
+	<mvc:resources location="/WEB-INF/video/" mapping="/video/**"/>
+	<mvc:resources location="/WEB-INF/fonts/" mapping="/fonts/**"/>
+	<mvc:resources location="/WEB-INF/pages/" mapping="/pages/**"/>
+	
+	
+	
+	 <!-- 3.扫描web相关的bean -->
+	 <context:component-scan base-package="org.framex.core" />
+	 <!-- 3.扫描web相关的bean -->
+	 <context:component-scan base-package="com.springanalysis" />
+	
+	
+	
+	
+	<!-- 备用 
+		2.静态资源默认servlet配置
+		(1)加入对静态资源的处理：js,gif,png
+		(2)允许使用"/"做整体映射
+	
+	 
+	 
+	 3.配置jsp 显示ViewResolver
+	 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	 	<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+	 	<property name="prefix" value="/WEB-INF/pages/" />
+	 	<property name="suffix" value=".jsp" />
+	 </bean> -->
+	
+	 
+</beans>
