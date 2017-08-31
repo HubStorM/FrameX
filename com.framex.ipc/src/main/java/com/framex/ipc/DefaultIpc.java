@@ -7,6 +7,7 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.apache.curator.retry.ExponentialBackoffRetry;
+import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
@@ -73,6 +74,18 @@ public class DefaultIpc implements IpcInterface{
                 e.printStackTrace();
             }
         }
+        try {
+            if(zk.exists(ZookeeperConstant.SERVICE_ROOT.toString(), null) != null){
+                //TODO 确定模块名称
+                ZookeeperHelper.create(zk, "/service/module1", "module1".getBytes());
+            }
+        } catch (KeeperException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     private void registerOne2OneSyncService(One2OneSyncService service){
