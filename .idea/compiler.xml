@@ -18,7 +18,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="com.framex.core" target="1.5" />
+      <module name="com.framex.core" target="1.9" />
       <module name="com.framex.daemon" target="1.5" />
       <module name="com.framex.fn" target="1.5" />
       <module name="com.framex.ipc" target="1.9" />

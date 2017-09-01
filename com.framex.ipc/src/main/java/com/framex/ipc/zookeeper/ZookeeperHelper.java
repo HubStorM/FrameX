@@ -61,22 +61,25 @@ public class ZookeeperHelper {
             e.printStackTrace();
         }
         */
-        try {
+        /*try {
             zoo.exists("/test", true);
         } catch (KeeperException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
         //zoo.getChildren("/test", true);
-        zoo.getData("/test/test2", true, null);
+        //zoo.getData("/test/test2", true, null);
         //create(zoo, "/test/test4", "testdata".getBytes());
         //System.out.println(create(zoo, "/test/test3", "testdata".getBytes()));
-        zoo.delete("/test/test2", -1);
-        try {
+        //zoo.delete("/test/test2", -1);
+        zoo.getChildren("/", true);
+        create(zoo, "/createTest", "createTest".getBytes());
+        System.in.read();
+        /*try {
             zoo.close();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

@@ -7,9 +7,10 @@ public abstract class AbstractService {
     protected String serviceGuid;
     protected String serviceVersion;
     protected String serviceEdition;
+    protected String group;
+    protected String module;
 
     public abstract ServiceType getSelfType();
-
 
 
     public String getServiceName() {
@@ -42,5 +43,21 @@ public abstract class AbstractService {
 
     public void setServiceEdition(String serviceEdition) {
         this.serviceEdition = serviceEdition;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public String getModule() {
+        return module;
+    }
+
+    public void setModule(String module) {
+        this.module = module;
     }
 }

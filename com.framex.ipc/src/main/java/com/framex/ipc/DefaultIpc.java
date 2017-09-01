@@ -53,37 +53,35 @@ public class DefaultIpc implements IpcInterface{
     /**
      * 创建zk服务节点目录。
      */
-    private void createZkStructure(){
+    private void createZkStructure() throws Exception{
         ZooKeeper zk = ZookeeperHelper.getConnection("localhost:2181", 5000, null);
         RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 3);
         //TODO connectString
         CuratorFramework client = CuratorFrameworkFactory.newClient("localhost:2181", retryPolicy);
         client.start();
         InterProcessMutex lock = new InterProcessMutex(client, ZookeeperConstant.SERVICE_LOCK.toString());
-        try {
-            if(lock.acquire(1000, TimeUnit.MILLISECONDS)){
-                ZookeeperHelper.create(zk, ZookeeperConstant.SERVICE_ROOT.toString(), "service_root_path".getBytes());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(lock.acquire(1000, TimeUnit.MILLISECONDS)){
+            ZookeeperHelper.create(zk, ZookeeperConstant.SERVICE_ROOT.toString(), "service_root_path".getBytes());
+            lock.release();
         }
-        finally {
-            try {
-                lock.release();
-            } catch (Exception e) {
-                e.printStackTrace();
+
+        zk.getChildren("/", event -> {
+            if(event.getState() == Watcher.Event.KeeperState.SyncConnected
+                    && event.getType() == Watcher.Event.EventType.NodeChildrenChanged){
+                try {
+                    List<String> paths = zk.getChildren("/", false);
+                    if(paths.contains(ZookeeperConstant.SERVICE_ROOT.toString())){
+                        //TODO 确定模块名称
+                        ZookeeperHelper.create(zk, "/service/module1", "module1".getBytes());
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        }
-        try {
-            if(zk.exists(ZookeeperConstant.SERVICE_ROOT.toString(), null) != null){
-                //TODO 确定模块名称
-                ZookeeperHelper.create(zk, "/service/module1", "module1".getBytes());
-            }
-        } catch (KeeperException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        });
+
+
 
 
     }
