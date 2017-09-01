@@ -6,6 +6,7 @@ import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
+import org.apache.curator.framework.recipes.locks.InterProcessReadWriteLock;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
@@ -46,7 +47,16 @@ public class DefaultIpc implements IpcInterface{
     }
 
 
+    /**
+     * 用读/写锁将注册中心的服务同步到本地缓存
+     * 设置watcher，同步本地缓存
+     */
     private void syncServiceInZk(){
+        ZooKeeper zk = ZookeeperHelper.getConnection("localhost:2181", 5000, null);
+        RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 3);
+        CuratorFramework client = CuratorFrameworkFactory.newClient("localhost:2181", retryPolicy);
+        client.start();
+        InterProcessReadWriteLock lock = new InterProcessReadWriteLock(client, ZookeeperConstant.SERVICE_SYNC_LOCK.toString());
 
     }
 
@@ -80,6 +90,7 @@ public class DefaultIpc implements IpcInterface{
                 }
             }
         });
+        client.close();
 
 
 
