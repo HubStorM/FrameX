@@ -23,7 +23,7 @@
       <module name="com.framex.fn" target="1.5" />
       <module name="com.framex.ipc" target="1.9" />
       <module name="com.framex.mobile" target="1.5" />
-      <module name="com.framex.persistence" target="1.5" />
+      <module name="com.framex.persistence" target="1.9" />
       <module name="com.framex.soa" target="1.5" />
       <module name="com.framex.util" target="1.5" />
       <module name="com.framex.web" target="1.9" />

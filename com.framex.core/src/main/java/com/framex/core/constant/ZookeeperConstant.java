@@ -1,7 +1,7 @@
 package com.framex.core.constant;
 
 public enum ZookeeperConstant {
-    SERVICE_LOCK("/service_lock"), SERVICE_ROOT("/service");
+    SERVICE_LOCK("/service_lock"), SERVICE_ROOT("/service"), SERVICE_SYNC_LOCK("/service_sync_lock");
 
     private String value;
 

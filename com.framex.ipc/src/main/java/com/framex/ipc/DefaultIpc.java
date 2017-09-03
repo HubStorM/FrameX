@@ -51,13 +51,17 @@ public class DefaultIpc implements IpcInterface{
      * 用读/写锁将注册中心的服务同步到本地缓存
      * 设置watcher，同步本地缓存
      */
-    private void syncServiceInZk(){
+    private void syncServiceInZk() throws Exception {
         ZooKeeper zk = ZookeeperHelper.getConnection("localhost:2181", 5000, null);
         RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 3);
         CuratorFramework client = CuratorFrameworkFactory.newClient("localhost:2181", retryPolicy);
         client.start();
         InterProcessReadWriteLock lock = new InterProcessReadWriteLock(client, ZookeeperConstant.SERVICE_SYNC_LOCK.toString());
+        final InterProcessMutex readLock = lock.readLock();
+        final InterProcessMutex writeLock = lock.writeLock();
+        if(readLock.acquire(1000 * 5, TimeUnit.MILLISECONDS)){
 
+        }
     }
 
     /**
@@ -70,7 +74,7 @@ public class DefaultIpc implements IpcInterface{
         CuratorFramework client = CuratorFrameworkFactory.newClient("localhost:2181", retryPolicy);
         client.start();
         InterProcessMutex lock = new InterProcessMutex(client, ZookeeperConstant.SERVICE_LOCK.toString());
-        if(lock.acquire(1000, TimeUnit.MILLISECONDS)){
+        if(lock.acquire(1000 * 5, TimeUnit.MILLISECONDS)){
             ZookeeperHelper.create(zk, ZookeeperConstant.SERVICE_ROOT.toString(), "service_root_path".getBytes());
             lock.release();
         }
