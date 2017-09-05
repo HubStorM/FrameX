@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface PersistenceInterface {
 
-    void registerDataSource(DataSource dataSourceDefinition);
-    void registerTransactionManager(PlatformTransactionManager transactionManagerDefinition);
+    void registerDataSource(DataSource dataSource);
+    void registerTransactionManager(PlatformTransactionManager transactionManager);
     List<DataSource> getDataSources();
     List<PlatformTransactionManager> getTransactionManagers();
     DataSource getDataSource(String beanName);
