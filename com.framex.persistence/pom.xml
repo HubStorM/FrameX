@@ -12,10 +12,26 @@
     <artifactId>com.framex.persistence</artifactId>
 
     <dependencies>
-        <dependency>
+       <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>5.2.10.Final</version>
+           <exclusions>
+               <exclusion>
+                   <artifactId>jboss-transaction-api_1.2_spec</artifactId>
+                   <groupId>org.jboss.spec.javax.transaction</groupId>
+               </exclusion>
+           </exclusions>
+       </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>4.3.7.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>4.3.7.RELEASE</version>
         </dependency>
     </dependencies>
 
