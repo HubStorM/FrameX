@@ -1,11 +1,15 @@
 package com.framex.persistence;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
@@ -19,7 +23,7 @@ public class DefaultPersistence implements PersistenceInterface{
     }
 
     @Override
-    public void registerDataSource(DataSource dataSource) {
+    public void registerDataSource(DataSource dataSource, String beanName) {
         Class<?> dataSourceClass = dataSource.getClass();
         BeanDefinitionBuilder builder = BeanDefinitionBuilder.rootBeanDefinition(dataSourceClass);
         if(dataSourceClass == BasicDataSource.class){
@@ -30,15 +34,23 @@ public class DefaultPersistence implements PersistenceInterface{
         }
         DefaultListableBeanFactory beanFactory = (DefaultListableBeanFactory)context.getAutowireCapableBeanFactory();
         //还有一种注册单例的方式，直接将dataSource作为参数。
-        beanFactory.registerBeanDefinition("dataSource", builder.getBeanDefinition());
+        beanFactory.registerBeanDefinition(beanName, builder.getBeanDefinition());
+        ((ConfigurableApplicationContext)context.getAutowireCapableBeanFactory()).refresh();
     }
 
     @Override
-    public void registerTransactionManager(PlatformTransactionManager transactionManager) {
+    public void registerTransactionManager(PlatformTransactionManager transactionManager, String dataSourceName, String beanName) {
+        if(context.getBean(dataSourceName) == null){
+            throw new NoSuchBeanDefinitionException("No dataSource defined with name " + dataSourceName);
+        }
         Class<?> txClass = transactionManager.getClass();
         BeanDefinitionBuilder builder = BeanDefinitionBuilder.rootBeanDefinition(txClass);
         if(txClass == DataSourceTransactionManager.class){
+            builder.addPropertyReference("dataSource", dataSourceName);
         }
+        DefaultListableBeanFactory beanFactory = (DefaultListableBeanFactory)context.getAutowireCapableBeanFactory();
+        beanFactory.registerBeanDefinition(beanName, builder.getBeanDefinition());
+        ((ConfigurableApplicationContext)context.getAutowireCapableBeanFactory()).refresh();
     }
 
     @Override
@@ -64,6 +76,14 @@ public class DefaultPersistence implements PersistenceInterface{
     @Override
     public void flush() {
 
+    }
+
+    public static ApplicationContext getContext() {
+        return context;
+    }
+
+    public static void setContext(ApplicationContext context) {
+        DefaultPersistence.context = context;
     }
 
     public static void main(String... args) throws Exception{
@@ -93,5 +113,9 @@ public class DefaultPersistence implements PersistenceInterface{
         dataSource.setPassword("11111");
         DataSourceTransactionManager tx = new DataSourceTransactionManager();
         tx.setDataSource(dataSource);
+        System.out.println(tx);
+
+        /*AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(PersistentConfig.class);
+        new ClassPathXmlApplicationContext("spring-persistence.xml").getBean("txManager");*/
     }
 }
