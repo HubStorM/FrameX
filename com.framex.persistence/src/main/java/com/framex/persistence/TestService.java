@@ -16,7 +16,7 @@ public class TestService {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    @Transactional("tz")
+    @Transactional("tx")
     public void main(){
         jdbcTemplate.execute("insert into framex_config values('1', '1', '1')");
     }

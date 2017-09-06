@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 
 @Configurable
-@ImportResource("classpath:spring-persistence.xml")
 public class PersistentConfig {
     @Bean("springContextUtil")
     public SpringContextUtil springContextUtil(){
