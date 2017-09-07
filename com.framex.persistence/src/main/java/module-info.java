@@ -6,5 +6,6 @@ module com.framex.persistence {
     requires commons.dbcp2;
     requires java.management;
     requires spring.jdbc;
+    requires spring.core;
     exports com.framex.persistence;
 }

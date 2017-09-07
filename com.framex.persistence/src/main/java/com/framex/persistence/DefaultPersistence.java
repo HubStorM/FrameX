@@ -34,8 +34,8 @@ public class DefaultPersistence implements PersistenceInterface{
         }
         DefaultListableBeanFactory beanFactory = (DefaultListableBeanFactory)context.getAutowireCapableBeanFactory();
         //还有一种注册单例的方式，直接将dataSource作为参数。
-        beanFactory.registerSingleton(beanName, dataSource);
-        //beanFactory.registerBeanDefinition(beanName, builder.getBeanDefinition());
+        //beanFactory.registerSingleton(beanName, dataSource);
+        beanFactory.registerBeanDefinition(beanName, builder.getBeanDefinition());
     }
 
     @Override
