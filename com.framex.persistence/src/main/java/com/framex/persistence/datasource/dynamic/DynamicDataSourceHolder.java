@@ -1,6 +1,6 @@
-package com.framex.persistence;
+package com.framex.persistence.datasource.dynamic;
 
-public class DataSourceHolder {
+public class DynamicDataSourceHolder {
     private static final ThreadLocal<String> dataSourceName = new ThreadLocal<String>();
 
     public static String getDataSourceName(){

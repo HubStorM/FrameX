@@ -1,4 +1,3 @@
-import com.framex.persistence.DataSourceHolder;
 import com.framex.persistence.DefaultPersistence;
 import com.framex.persistence.TestService;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -27,6 +26,8 @@ public class Test {
         dataSourceB.setUsername("root");
         dataSourceB.setPassword("11111");
         persistence.registerDataSource(dataSourceB, "dataSourceB");
+
+
 
         /*DynamicDataSource dynamicDataSource = persistence.getContext().getBean("dynamicDataSource", DynamicDataSource.class);
         Map<Object, Object> dataSources = new HashMap<Object, Object>();

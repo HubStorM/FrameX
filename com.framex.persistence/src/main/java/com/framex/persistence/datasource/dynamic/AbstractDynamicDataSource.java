@@ -1,4 +1,4 @@
-package com.framex.persistence;
+package com.framex.persistence.datasource.dynamic;
 
 import javax.sql.DataSource;
 import java.io.PrintWriter;
@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 /**
@@ -18,12 +17,14 @@ public abstract class AbstractDynamicDataSource implements DataSource {
 
     private static final Map<Object, DataSource> dataSourcePool = new HashMap();
 
-    public static void addDataSource(Object name, DataSource value){
+    public AbstractDynamicDataSource addDataSource(Object name, DataSource value){
         dataSourcePool.put(name, value);
+        return this;
     }
 
-    public static void removeDataSource(Object name){
+    public AbstractDynamicDataSource removeDataSource(Object name){
         dataSourcePool.remove(name);
+        return this;
     }
 
     public static void clearDataSourcePool(){

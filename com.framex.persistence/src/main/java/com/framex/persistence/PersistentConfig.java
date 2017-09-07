@@ -1,12 +1,10 @@
 package com.framex.persistence;
 
+import com.framex.persistence.datasource.dynamic.DynamicDataSource;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.ImportResource;
 
 import java.util.HashMap;
-import java.util.Map;
 
 @Configurable
 public class PersistentConfig {
