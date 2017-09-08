@@ -7,5 +7,6 @@ module com.framex.persistence {
     requires java.management;
     requires spring.jdbc;
     requires spring.core;
+    requires c3p0;
     exports com.framex.persistence;
 }

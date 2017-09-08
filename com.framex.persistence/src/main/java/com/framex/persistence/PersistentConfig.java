@@ -15,8 +15,6 @@ public class PersistentConfig {
 
     @Bean("dynamicDataSource")
     public DynamicDataSource dynamicDataSource(){
-        DynamicDataSource instance = new DynamicDataSource();
-        instance.setTargetDataSources(new HashMap<Object, Object>());
-        return instance;
+        return new DynamicDataSource();
     }
 }

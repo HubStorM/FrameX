@@ -1,14 +1,5 @@
 import com.framex.persistence.DefaultPersistence;
-import com.framex.persistence.TestService;
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class Test {
 
