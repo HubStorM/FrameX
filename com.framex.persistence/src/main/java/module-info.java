@@ -1,5 +1,4 @@
 module com.framex.persistence {
-    requires java.sql;
     requires spring.tx;
     requires spring.beans;
     requires spring.context;
@@ -10,5 +9,8 @@ module com.framex.persistence {
     requires c3p0;
     requires java.naming;
     requires hibernate.jpa;
+    requires spring.orm;
+    requires hibernate.core;
+    requires java.sql;
     exports com.framex.persistence;
 }

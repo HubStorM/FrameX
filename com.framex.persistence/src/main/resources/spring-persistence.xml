@@ -15,7 +15,7 @@
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dynamicDataSource"/>
-        <property name="packagesToScan" value="com.framex"/>
+        <property name="packagesToScan" value="com.framex.persistence.framexconfig"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.show_sql">true</prop>

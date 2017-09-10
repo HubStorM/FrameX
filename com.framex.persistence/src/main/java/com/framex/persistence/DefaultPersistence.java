@@ -81,36 +81,5 @@ public class DefaultPersistence implements PersistenceInterface{
         return context;
     }
 
-    public static void main(String... args) throws Exception{
-        /*AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(PersistentConfig.class);
-        System.out.println(context.getBean("springContextUtil"));*/
 
-        /*DefaultPersistence persistence = new DefaultPersistence();
-        persistence.registerDataSource(new BasicDataSource());*/
-
-        /*DefaultPersistence persistence = new DefaultPersistence();
-        persistence.registerDataSource(new BasicDataSource());
-        System.out.println(context.getBean("dataSource"));*/
-
-        /*DefaultPersistence persistence = new DefaultPersistence();
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/oa");
-        dataSource.setUsername("root");
-        dataSource.setPassword("11111");
-        persistence.registerDataSource(dataSource);
-        System.out.println(context.getBean("dataSource", BasicDataSource.class).getConnection());*/
-
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/oa");
-        dataSource.setUsername("root");
-        dataSource.setPassword("11111");
-        DataSourceTransactionManager tx = new DataSourceTransactionManager();
-        tx.setDataSource(dataSource);
-        System.out.println(tx);
-
-        /*AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(PersistentConfig.class);
-        new ClassPathXmlApplicationContext("spring-persistence.xml").getBean("txManager");*/
-    }
 }

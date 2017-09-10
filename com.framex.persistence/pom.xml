@@ -59,6 +59,12 @@
             <artifactId>spring-orm</artifactId>
             <version>4.3.10.RELEASE</version>
         </dependency>
+
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+            <version>1.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -66,10 +72,40 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.2</version>
                 <configuration>
                     <source>1.9</source>
                     <target>1.9</target>
                 </configuration>
+
+            </plugin>
+
+           <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>shade</id>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <filters>
+                                <filter>
+                                    <artifact>javax.transaction:jta</artifact>
+                                    <excludes>
+                                        <exclude>javax/transaction/xa/*</exclude>
+                                        <!--<exclude>javax/transaction/xa/XAException</exclude>
+                                        <exclude>javax/transaction/xa/XAResource</exclude>
+                                        <exclude>javax/transaction/xa/Xid</exclude>-->
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>

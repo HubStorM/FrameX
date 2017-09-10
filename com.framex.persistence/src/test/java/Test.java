@@ -14,12 +14,12 @@ public class Test {
 
     public static void main(String... args){
 
-        DataSourceFactory.buildDataSource("dataSourceA",
+        /*DataSourceFactory.buildDataSource("dataSourceA",
                 SupportedDataSourceEnum.BASICDATASOURCE,
                 Arrays.asList("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/framex", "root", "11111"),
                 null);
         DynamicDataSourceHolder.setDataSourceName("dataSourceA");
-        SpringContextUtil.getApplicationContext().getBean("testservice", TestService.class).main();
+        SpringContextUtil.getApplicationContext().getBean("testservice", TestService.class).main();*/
 
         /*DefaultPersistence persistence = new DefaultPersistence();
         BasicDataSource dataSourceA = new BasicDataSource();
@@ -76,5 +76,13 @@ public class Test {
         /*child.setParent(persistence.getContext());
         child.getBean("testservice", TestService.class);*/
         //persistence.getContext().getBean("testservice", TestService.class).main();
+
+        DataSourceFactory.buildDataSource("dataSourceA",
+                SupportedDataSourceEnum.BASICDATASOURCE,
+                Arrays.asList("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/framex", "root", "11111"),
+                null);
+        DynamicDataSourceHolder.setDataSourceName("dataSourceA");
+        SpringContextUtil.getApplicationContext().getBean("testservice", TestService.class).tx();
+
     }
 }
