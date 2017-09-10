@@ -4,7 +4,6 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.sql.DataSource;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

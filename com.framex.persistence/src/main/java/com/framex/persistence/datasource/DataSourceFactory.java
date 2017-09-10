@@ -1,5 +1,8 @@
 package com.framex.persistence.datasource;
 
+import com.framex.persistence.DefaultPersistence;
+import com.framex.persistence.SpringContextUtil;
+import com.framex.persistence.datasource.dynamic.DynamicDataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.sql.DataSource;
@@ -13,20 +16,21 @@ import java.util.stream.IntStream;
  * @description
  */
 public class DataSourceFactory {
-    public DataSource buildDataSource(SupportedDataSourceEnum dataSourceType, List<Object> necessary, Map<String, Object> optional){
+    public static DataSource buildDataSource(String beanName, SupportedDataSourceEnum dataSourceType, List<Object> necessary, Map<String, Object> optional){
         if(dataSourceType.getNecessary().size() != 0 && necessary == null) {
             throw new NullPointerException("Necessary args for " + dataSourceType.getDataSourceClass() + " is needed");
         }
-        if(Objects.equals(dataSourceType.getNecessary().size(), necessary.size())) {
+        if(!Objects.equals(dataSourceType.getNecessary().size(), necessary.size())) {
             throw new IllegalArgumentException("Necessary args error.Need "
                     + dataSourceType.getNecessary() + ",But get " + Arrays.asList(necessary));
         }
         DataSource dataSource = builder(dataSourceType, necessary, optional);
-
+        new DefaultPersistence().registerDataSource(dataSource, beanName);
+        new DynamicDataSource().addDataSource(beanName, SpringContextUtil.getApplicationContext().getBean(beanName, DataSource.class));
         return dataSource;
     }
 
-    private DataSource builder(SupportedDataSourceEnum dataSourceType, List<Object> necessary, Map<String, Object> optional) {
+    private static DataSource builder(SupportedDataSourceEnum dataSourceType, List<Object> necessary, Map<String, Object> optional) {
         Class<? extends DataSource> type = dataSourceType.getDataSourceClass();
         DataSource dataSource;
         try {

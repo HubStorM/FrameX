@@ -1,10 +1,27 @@
 import com.framex.persistence.DefaultPersistence;
+import com.framex.persistence.SpringContextUtil;
+import com.framex.persistence.TestService;
+import com.framex.persistence.datasource.DataSourceFactory;
+import com.framex.persistence.datasource.SupportedDataSourceEnum;
+import com.framex.persistence.datasource.dynamic.DynamicDataSource;
+import com.framex.persistence.datasource.dynamic.DynamicDataSourceHolder;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.util.Arrays;
 
 public class Test {
 
     public static void main(String... args){
-        DefaultPersistence persistence = new DefaultPersistence();
+
+        DataSourceFactory.buildDataSource("dataSourceA",
+                SupportedDataSourceEnum.BASICDATASOURCE,
+                Arrays.asList("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/framex", "root", "11111"),
+                null);
+        DynamicDataSourceHolder.setDataSourceName("dataSourceA");
+        SpringContextUtil.getApplicationContext().getBean("testservice", TestService.class).main();
+
+        /*DefaultPersistence persistence = new DefaultPersistence();
         BasicDataSource dataSourceA = new BasicDataSource();
         dataSourceA.setDriverClassName("com.mysql.jdbc.Driver");
         dataSourceA.setUrl("jdbc:mysql://localhost:3306/dynamicDataSourceA");
@@ -16,9 +33,16 @@ public class Test {
         dataSourceB.setUrl("jdbc:mysql://localhost:3306/dynamicDataSourceB");
         dataSourceB.setUsername("root");
         dataSourceB.setPassword("11111");
-        persistence.registerDataSource(dataSourceB, "dataSourceB");
+        persistence.registerDataSource(dataSourceB, "dataSourceB");*/
 
-
+        /*DataSourceFactory.buildDataSource("dataSourceA",
+                SupportedDataSourceEnum.BASICDATASOURCE,
+                Arrays.asList("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/framex", "root", "11111"),
+                null);
+        DynamicDataSource dynamicDataSource = SpringContextUtil.getApplicationContext().getBean("dynamicDataSource", DynamicDataSource.class);
+        DynamicDataSourceHolder.setDataSourceName("dataSourceA");
+        JdbcTemplate jdbc = new JdbcTemplate(dynamicDataSource);
+        jdbc.execute("insert into framex_config VALUES ('4', '4', '4')");*/
 
         /*DynamicDataSource dynamicDataSource = persistence.getContext().getBean("dynamicDataSource", DynamicDataSource.class);
         Map<Object, Object> dataSources = new HashMap<Object, Object>();

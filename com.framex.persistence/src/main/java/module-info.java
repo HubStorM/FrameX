@@ -8,5 +8,7 @@ module com.framex.persistence {
     requires spring.jdbc;
     requires spring.core;
     requires c3p0;
+    requires java.naming;
+    requires hibernate.jpa;
     exports com.framex.persistence;
 }

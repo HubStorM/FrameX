@@ -16,14 +16,14 @@ import javax.sql.DataSource;
 import java.util.List;
 
 public class DefaultPersistence implements PersistenceInterface{
-    private static ApplicationContext context;
+    private static final ApplicationContext context = new AnnotationConfigApplicationContext(PersistentConfig.class);
 
     public DefaultPersistence(){
-        context = new AnnotationConfigApplicationContext(PersistentConfig.class);
     }
 
     @Override
     public void registerDataSource(DataSource dataSource, String beanName) {
+        /*
         Class<?> dataSourceClass = dataSource.getClass();
         BeanDefinitionBuilder builder = BeanDefinitionBuilder.rootBeanDefinition(dataSourceClass);
         if(dataSourceClass == BasicDataSource.class){
@@ -32,10 +32,10 @@ public class DefaultPersistence implements PersistenceInterface{
                     .addPropertyValue("username", ((BasicDataSource) dataSource).getUsername())
                     .addPropertyValue("password", ((BasicDataSource) dataSource).getPassword());
         }
-        DefaultListableBeanFactory beanFactory = (DefaultListableBeanFactory)context.getAutowireCapableBeanFactory();
-        //还有一种注册单例的方式，直接将dataSource作为参数。
-        //beanFactory.registerSingleton(beanName, dataSource);
         beanFactory.registerBeanDefinition(beanName, builder.getBeanDefinition());
+        */
+        DefaultListableBeanFactory beanFactory = (DefaultListableBeanFactory)context.getAutowireCapableBeanFactory();
+        beanFactory.registerSingleton(beanName, dataSource);
     }
 
     @Override
@@ -79,10 +79,6 @@ public class DefaultPersistence implements PersistenceInterface{
 
     public static ApplicationContext getContext() {
         return context;
-    }
-
-    public static void setContext(ApplicationContext context) {
-        DefaultPersistence.context = context;
     }
 
     public static void main(String... args) throws Exception{
