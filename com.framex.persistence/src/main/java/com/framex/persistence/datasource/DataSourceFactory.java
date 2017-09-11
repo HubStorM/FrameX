@@ -3,7 +3,6 @@ package com.framex.persistence.datasource;
 import com.framex.persistence.DefaultPersistence;
 import com.framex.persistence.SpringContextUtil;
 import com.framex.persistence.datasource.dynamic.DynamicDataSource;
-import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.sql.DataSource;
 import java.lang.reflect.Method;

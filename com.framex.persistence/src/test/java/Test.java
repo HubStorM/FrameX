@@ -1,14 +1,16 @@
-import com.framex.persistence.DefaultPersistence;
 import com.framex.persistence.SpringContextUtil;
 import com.framex.persistence.TestService;
 import com.framex.persistence.datasource.DataSourceFactory;
 import com.framex.persistence.datasource.SupportedDataSourceEnum;
-import com.framex.persistence.datasource.dynamic.DynamicDataSource;
 import com.framex.persistence.datasource.dynamic.DynamicDataSourceHolder;
-import org.apache.commons.dbcp2.BasicDataSource;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.List;
 
 public class Test {
 
@@ -82,7 +84,6 @@ public class Test {
                 Arrays.asList("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/framex", "root", "11111"),
                 null);
         DynamicDataSourceHolder.setDataSourceName("dataSourceA");
-        SpringContextUtil.getApplicationContext().getBean("testservice", TestService.class).tx();
-
+        SpringContextUtil.getApplicationContext().getBean("testservice", TestService.class).list();
     }
 }

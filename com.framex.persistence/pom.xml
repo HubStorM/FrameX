@@ -74,13 +74,13 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.6.2</version>
                 <configuration>
-                    <source>1.9</source>
-                    <target>1.9</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
 
             </plugin>
 
-           <plugin>
+           <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.1.0</version>
@@ -97,16 +97,16 @@
                                     <artifact>javax.transaction:jta</artifact>
                                     <excludes>
                                         <exclude>javax/transaction/xa/*</exclude>
-                                        <!--<exclude>javax/transaction/xa/XAException</exclude>
+                                        &lt;!&ndash;<exclude>javax/transaction/xa/XAException</exclude>
                                         <exclude>javax/transaction/xa/XAResource</exclude>
-                                        <exclude>javax/transaction/xa/Xid</exclude>-->
+                                        <exclude>javax/transaction/xa/Xid</exclude>&ndash;&gt;
                                     </excludes>
                                 </filter>
                             </filters>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
             <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-toolchains-plugin</artifactId>

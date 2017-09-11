@@ -11,6 +11,9 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.util.List;
+import java.util.Map;
+
 @Component("testservice")
 public class TestService {
     public JdbcTemplate jdbcTemplate;
@@ -24,7 +27,7 @@ public class TestService {
     private SessionFactory sessionFactory;
 
     @Autowired
-    private static PlatformTransactionManager tx;
+    private PlatformTransactionManager tx;
 
     public void main(){
         jdbcTemplate.execute("insert into framex_config values('1', '1', '1')");
@@ -37,6 +40,11 @@ public class TestService {
                 System.out.println(sessionFactory.getCurrentSession().get(FramexConfig.class, "1"));
             }
         });
+    }
+
+    public void list(){
+        List<Map<String, Object>> result = jdbcTemplate.queryForList("SELECT * FROM framex_config");
+
     }
 
 
