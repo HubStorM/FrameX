@@ -11,6 +11,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ public class TestService {
     public JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public void setDataSource(DynamicDataSource dataSource) {
+    public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
@@ -43,7 +44,7 @@ public class TestService {
     }
 
     public void list(){
-        List<Map<String, Object>> result = jdbcTemplate.queryForList("SELECT * FROM framex_config");
+        List<Map<String, Object>> result = jdbcTemplate.queryForList("SELECT * FROM framex_a");
 
     }
 
