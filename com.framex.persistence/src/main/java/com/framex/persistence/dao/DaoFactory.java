@@ -7,6 +7,14 @@ package com.framex.persistence.dao;
  */
 public class DaoFactory {
 
-
-
+    public static Dao getDao(DaoTypeEnum type){
+        switch(type){
+            case SINGLETON:
+                return DefaultDao.INSTANCE;
+            case PROTOTYPE:
+                return new PrototypeDao();
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
 }
