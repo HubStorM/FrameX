@@ -12,14 +12,14 @@ import java.util.Map;
  * @date 2017/9/21 12:46
  * @description
  */
-public enum DefaultDao implements Dao{
+public enum SingletonDao implements Dao{
     INSTANCE;
 
     private final DataSource dataSource;
 
     private final JdbcTemplate jdbcTemplate;
 
-    private DefaultDao(){
+    private SingletonDao(){
         dataSource = SpringContextUtil.getApplicationContext().getBean("defaultDataSource", DataSource.class);
         jdbcTemplate = SpringContextUtil.getApplicationContext().getBean("defaultJdbcTemplate", JdbcTemplate.class);
     }

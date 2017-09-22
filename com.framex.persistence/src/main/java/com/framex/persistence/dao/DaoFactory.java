@@ -10,7 +10,7 @@ public class DaoFactory {
     public static Dao getDao(DaoTypeEnum type){
         switch(type){
             case SINGLETON:
-                return DefaultDao.INSTANCE;
+                return SingletonDao.INSTANCE;
             case PROTOTYPE:
                 return new PrototypeDao();
             default:
