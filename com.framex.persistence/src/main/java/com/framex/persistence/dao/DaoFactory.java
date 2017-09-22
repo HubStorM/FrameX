@@ -17,4 +17,8 @@ public class DaoFactory {
                 throw new IllegalArgumentException();
         }
     }
+
+    public static Dao getDao(String dataSourceName){
+        return new PrototypeDao(dataSourceName);
+    }
 }

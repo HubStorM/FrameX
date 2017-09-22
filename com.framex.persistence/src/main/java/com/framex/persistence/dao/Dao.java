@@ -14,6 +14,8 @@ import java.util.Map;
 public interface Dao {
     DaoTypeEnum getType();
     DataSource getDataSource();
+    boolean supportDynamicDataSource();
+    Dao changeDataSource(String dataSourceBeanName);
     boolean supportJdbcTemplate();
     JdbcTemplate getJdbcTemplate();
 

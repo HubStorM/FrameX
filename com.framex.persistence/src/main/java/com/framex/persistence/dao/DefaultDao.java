@@ -35,6 +35,17 @@ public enum DefaultDao implements Dao{
     }
 
     @Override
+    public boolean supportDynamicDataSource() {
+        return false;
+    }
+
+    @Override
+    public Dao changeDataSource(String dataSourceBeanName) {
+        throw new RuntimeException("singleton dao does not support dynamicDataSource");
+    }
+
+
+    @Override
     public <T> T findObject(String sql, Class<T> requiredType, Object... args) {
         return jdbcTemplate.queryForObject(sql, requiredType, args);
     }
