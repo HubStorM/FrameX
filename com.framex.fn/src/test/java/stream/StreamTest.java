@@ -17,7 +17,5 @@ public class StreamTest {
 
         list.parallelStream().filter((t -> "1".equals(t)));*/
 
-        System.out.println(Optional.ofNullable("123").orElse("null"));
-        Optional.<String>ofNullable(null).ifPresentOrElse( t -> System.out.println("t is not NULL"), () -> System.out.println("t is null"));
     }
 }

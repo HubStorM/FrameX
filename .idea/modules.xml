@@ -12,6 +12,7 @@
       <module fileurl="file://$PROJECT_DIR$/com.framex.soa/com.framex.soa.iml" filepath="$PROJECT_DIR$/com.framex.soa/com.framex.soa.iml" />
       <module fileurl="file://$PROJECT_DIR$/com.framex.util/com.framex.util.iml" filepath="$PROJECT_DIR$/com.framex.util/com.framex.util.iml" />
       <module fileurl="file://$PROJECT_DIR$/com.framex.web/com.framex.web.iml" filepath="$PROJECT_DIR$/com.framex.web/com.framex.web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/framex/framex.iml" filepath="$PROJECT_DIR$/framex/framex.iml" />
     </modules>
   </component>
 </project>

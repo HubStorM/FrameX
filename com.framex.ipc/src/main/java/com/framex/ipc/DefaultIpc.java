@@ -39,11 +39,12 @@ public class DefaultIpc implements IpcInterface{
      */
     @Override
     public void ipcRegisterService(AbstractService service, ServiceType type){
-        Optional.ofNullable(type).ifPresentOrElse(t -> {
-            if(t.equals(ServiceType.ONE2ONE_SYNC)){
-                registerOne2OneSyncService((One2OneSyncService)service);
-            }
-        }, () -> {throw new NullPointerException("ServiceType must not be null.");});
+        if(type == null){
+            throw new NullPointerException("ServiceType must not be null.");
+        }
+        if(type.equals(ServiceType.ONE2ONE_SYNC)){
+            registerOne2OneSyncService((One2OneSyncService)service);
+        }
     }
 
 
