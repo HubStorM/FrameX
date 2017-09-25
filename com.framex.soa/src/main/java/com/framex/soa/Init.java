@@ -6,5 +6,5 @@ package com.framex.soa;
  * @description 框架入口接口
  */
 public interface Init {
-
+    boolean init(String classPathFileName);
 }
