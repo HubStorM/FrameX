@@ -15,6 +15,7 @@ public class FramexModule {
     private String moduleUri;
     private String moduleIp;
     private String modulePort;
+    private String servicePackageName;
 
     @Id
     @Column(name = "RowGuid")
@@ -65,6 +66,18 @@ public class FramexModule {
     public void setModulePort(String modulePort) {
         this.modulePort = modulePort;
     }
+
+    @Basic
+    @Column(name = "ServicePackageName")
+    public String getServicePackageName() {
+        return servicePackageName;
+    }
+
+    public void setServicePackageName(String servicePackageName) {
+        this.servicePackageName = servicePackageName;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {

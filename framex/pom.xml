@@ -21,6 +21,11 @@
             <artifactId>com.framex.persistence</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.framex</groupId>
+            <artifactId>com.framex.soa</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
 
 

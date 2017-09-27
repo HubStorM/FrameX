@@ -19,7 +19,7 @@ public class YamlConfiguration implements SystemConfiguration{
 
     @Override
     public String getModuleName() {
-        return mapper.readvalue();
+        return null;
     }
 
     @Override

@@ -11,18 +11,34 @@
 
     <artifactId>com.framex.soa</artifactId>
     <dependencies>
+        <!-- framex dependency-->
         <dependency>
             <groupId>com.framex</groupId>
             <artifactId>com.framex.core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>org.ini4j</groupId>
-            <artifactId>ini4j</artifactId>
+            <groupId>com.framex</groupId>
+            <artifactId>com.framex.persistence</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
+
+        <!-- spring:core:resources interface-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+        </dependency>
+
+        <!-- yaml parse-->
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
+        </dependency>
+
+        <!-- log -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
     </dependencies>
 
