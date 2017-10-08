@@ -1,4 +1,4 @@
-package com.framex.ipc;
+package com.framex.soa;
 
 public class ServiceHolder {
     private static class ServiceLoader{

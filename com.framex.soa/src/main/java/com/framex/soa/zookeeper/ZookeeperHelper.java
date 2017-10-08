@@ -1,4 +1,4 @@
-package com.framex.ipc.zookeeper;
+package com.framex.soa.zookeeper;
 
 import org.apache.zookeeper.*;
 
@@ -15,8 +15,8 @@ public class ZookeeperHelper {
                 if (event.getState() == Watcher.Event.KeeperState.SyncConnected) {
                     connectedSignal.countDown();
                 }
-                System.out.println("Got an event on zookeeper : "
-                        + event.getState() + "-" + event.getType() + " on " + event.getPath());
+                /*System.out.println("Got an event on zookeeper : "
+                        + event.getState() + "-" + event.getType() + " on " + event.getPath());*/
             });
         } catch (IOException e) {
             e.printStackTrace();
@@ -39,6 +39,18 @@ public class ZookeeperHelper {
         } catch (KeeperException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean exists(ZooKeeper zk, String path){
+        try {
+            if(zk.exists(path, false) == null){
+                return false;
+            }
+            return true;
+        } catch (KeeperException | InterruptedException e) {
             e.printStackTrace();
         }
         return false;

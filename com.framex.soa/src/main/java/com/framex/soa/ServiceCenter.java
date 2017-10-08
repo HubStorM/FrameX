@@ -1,14 +1,13 @@
-package com.framex.ipc;
+package com.framex.soa;
 
 import com.framex.core.constant.*;
-import com.framex.ipc.zookeeper.ZookeeperHelper;
+import com.framex.soa.zookeeper.ZookeeperHelper;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.apache.curator.framework.recipes.locks.InterProcessReadWriteLock;
 import org.apache.curator.retry.ExponentialBackoffRetry;
-import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
@@ -16,11 +15,20 @@ import org.apache.zookeeper.ZooKeeper;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-public class DefaultIpc implements IpcInterface{
+public class ServiceCenter{
 
     private static Map<String, SyncAbstractService> syncServices = new HashMap<String, SyncAbstractService>();
 
     private static Set<One2OneSyncService> initOne2OneSyncServicesCache = new HashSet<One2OneSyncService>();
+
+    private static CuratorFramework client;
+
+    public ServiceCenter() {
+    }
+
+    public ServiceCenter(CuratorFramework client) {
+        this.client = client;
+    }
 
     /**
      * zk服务节点同步
@@ -37,8 +45,7 @@ public class DefaultIpc implements IpcInterface{
      * @param service soa层传入的需要注册的服务
      * @param type soa层传入的服务类型，目前只处理一对一同步请求类型和一对多异步发布/订阅类型的服务
      */
-    @Override
-    public void ipcRegisterService(AbstractService service, ServiceType type){
+    public void registerService(AbstractService service, ServiceType type){
         if(type == null){
             throw new NullPointerException("ServiceType must not be null.");
         }
@@ -150,6 +157,6 @@ public class DefaultIpc implements IpcInterface{
     }
 
     public static void setSyncServices(Map<String, SyncAbstractService> syncServices) {
-        DefaultIpc.syncServices = syncServices;
+        ServiceCenter.syncServices = syncServices;
     }
 }

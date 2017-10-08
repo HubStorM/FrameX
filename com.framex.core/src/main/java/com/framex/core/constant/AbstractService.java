@@ -1,6 +1,5 @@
 package com.framex.core.constant;
 
-import java.util.Objects;
 
 public abstract class AbstractService {
     protected String serviceName;

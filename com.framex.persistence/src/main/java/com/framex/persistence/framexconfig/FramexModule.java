@@ -4,11 +4,11 @@ import javax.persistence.*;
 
 /**
  * @author lijie
- * @date 2017/9/10 14:57
+ * @date 2017/10/1 22:54
  * @description
  */
 @Entity
-@Table(name = "framex_module", schema = "framex")
+@Table(name = "framex_module", schema = "framex", catalog = "")
 public class FramexModule {
     private String rowGuid;
     private String moduleName;
@@ -16,6 +16,7 @@ public class FramexModule {
     private String moduleIp;
     private String modulePort;
     private String servicePackageName;
+    private String version;
 
     @Id
     @Column(name = "RowGuid")
@@ -68,7 +69,7 @@ public class FramexModule {
     }
 
     @Basic
-    @Column(name = "ServicePackageName")
+    @Column(name = "servicePackageName")
     public String getServicePackageName() {
         return servicePackageName;
     }
@@ -77,7 +78,15 @@ public class FramexModule {
         this.servicePackageName = servicePackageName;
     }
 
+    @Basic
+    @Column(name = "version")
+    public String getVersion() {
+        return version;
+    }
 
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -91,6 +100,9 @@ public class FramexModule {
         if (moduleUri != null ? !moduleUri.equals(that.moduleUri) : that.moduleUri != null) return false;
         if (moduleIp != null ? !moduleIp.equals(that.moduleIp) : that.moduleIp != null) return false;
         if (modulePort != null ? !modulePort.equals(that.modulePort) : that.modulePort != null) return false;
+        if (servicePackageName != null ? !servicePackageName.equals(that.servicePackageName) : that.servicePackageName != null)
+            return false;
+        if (version != null ? !version.equals(that.version) : that.version != null) return false;
 
         return true;
     }
@@ -102,6 +114,8 @@ public class FramexModule {
         result = 31 * result + (moduleUri != null ? moduleUri.hashCode() : 0);
         result = 31 * result + (moduleIp != null ? moduleIp.hashCode() : 0);
         result = 31 * result + (modulePort != null ? modulePort.hashCode() : 0);
+        result = 31 * result + (servicePackageName != null ? servicePackageName.hashCode() : 0);
+        result = 31 * result + (version != null ? version.hashCode() : 0);
         return result;
     }
 }

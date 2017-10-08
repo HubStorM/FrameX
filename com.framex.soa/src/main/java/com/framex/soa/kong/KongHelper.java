@@ -1,4 +1,4 @@
-package com.framex.ipc.kong;
+package com.framex.soa.kong;
 
 public class KongHelper {
 }
