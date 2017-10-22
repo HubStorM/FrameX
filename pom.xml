@@ -10,7 +10,6 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>com.framex.core</module>
-        <module>com.framex.soa.ipc</module>
         <module>com.framex.web</module>
         <module>com.framex.util</module>
         <module>com.framex.soa</module>

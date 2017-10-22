@@ -126,4 +126,9 @@ public class PrototypeDao implements Dao{
         return jdbcTemplate.update(sql, args, argTypes);
     }
 
+    @Override
+    public <T> void update(T item) {
+
+    }
+
 }

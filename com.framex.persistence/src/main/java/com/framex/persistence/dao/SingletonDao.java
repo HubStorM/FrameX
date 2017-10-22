@@ -108,5 +108,10 @@ public enum SingletonDao implements Dao{
         return jdbcTemplate.update(sql, args, argTypes);
     }
 
+    @Override
+    public <T> void update(T item) {
+
+    }
+
 
 }

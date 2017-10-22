@@ -32,4 +32,6 @@ public interface Dao {
     int update(String sql, Object... args);
     int update(String sql, Object[] args, int[] argTypes);
 
+    <T> void update(T item);
+
 }
