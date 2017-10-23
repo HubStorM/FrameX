@@ -8,7 +8,9 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.Assert;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.IOException;
@@ -29,6 +31,8 @@ public abstract class Init {
 
     private static ServiceCenter serviceCenter;
 
+    abstract boolean customProcedure();
+
     public boolean init(String classPathFileName){
         ClassPathResource configurationResource = new ClassPathResource(classPathFileName);
         try(InputStream input = configurationResource.getInputStream()){
@@ -37,7 +41,7 @@ public abstract class Init {
             ConfigurationHolder.setConfiguration(config);
             checkFrameConfiguration();
         } catch (IOException e) {
-            log.debug("Parsing framex configuration file error.");
+            log.error("Parsing framex configuration file error.");
             e.printStackTrace();
             return false;
         }
@@ -46,6 +50,7 @@ public abstract class Init {
         client.start();
 
         try {
+            initPersistence();
             initServiceCenterRootNode(client);
             initModuleRootNode(client);
             initDefaultGroupNode(client);
@@ -58,8 +63,14 @@ public abstract class Init {
         return true;
     }
 
-
-    abstract boolean customProcedure();
+    /**
+     * 持久层初始化
+     */
+    private void initPersistence(){
+        ClassPathResource modulePersistence = new ClassPathResource("persistence.xml");
+        assert !modulePersistence.exists();
+        new ClassPathXmlApplicationContext("frame-persistence.xml");
+    }
 
     private void initServiceCenterRootNode(CuratorFramework client) throws Exception{
         Map<String, String> zookeeper = ConfigurationHolder.getConfiguration().getZookeeper();

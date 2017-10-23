@@ -1,3 +1,9 @@
+import com.framex.persistence.datasource.DataSourceFactory;
+import com.framex.persistence.datasource.SupportedDataSourceEnum;
+import com.framex.persistence.datasource.dynamic.DynamicDataSourceHolder;
+
+import java.util.Arrays;
+
 public class Test {
 
     public static void main(String... args){
@@ -56,7 +62,7 @@ public class Test {
         persistence.registerTransactionManager(tx, "dataSourceA", "tx");*/
 
         //((ConfigurableApplicationContext)persistence.getContext()).refresh();
-        /*ConfigurableApplicationContext child = new ClassPathXmlApplicationContext("spring-persistence.xml");
+        /*ConfigurableApplicationContext child = new ClassPathXmlApplicationContext("frame-persistence.xml");
         child.setParent(persistence.getContext());
         child.refresh();
         child.getBean("testservice", TestService.class);*/
@@ -65,12 +71,11 @@ public class Test {
         child.getBean("testservice", TestService.class);*/
         //persistence.getContext().getBean("testservice", TestService.class).main();
 
-        /*DataSourceFactory.buildDataSource("dataSourceA",
+        DataSourceFactory.buildDataSource("dataSourceA",
                 SupportedDataSourceEnum.BASICDATASOURCE,
                 Arrays.asList("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/dynamicdatasourcea", "root", "11111"),
                 null);
         DynamicDataSourceHolder.setDataSourceName("dataSourceA");
-        SpringContextUtil.getApplicationContext().getBean("testservice", TestService.class).tx();*/
 
         //Dao dao = SingletonDao.INSTANCE;
 
