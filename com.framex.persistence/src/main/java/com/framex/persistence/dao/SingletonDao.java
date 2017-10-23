@@ -115,8 +115,4 @@ public enum SingletonDao implements Dao{
     }
 
 
-    public static void main(String... args) {
-         DaoFactory.getDao(DaoTypeEnum.SINGLETON);
-    }
-
 }

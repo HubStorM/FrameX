@@ -5,9 +5,11 @@ import com.framex.persistence.dao.Dao;
 import com.framex.persistence.dao.DaoTypeEnum;
 import com.framex.persistence.datasource.dynamic.DynamicDataSource;
 import com.framex.persistence.framexconfig.ConfigurationHolder;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
+import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
 import javax.sql.DataSource;
@@ -20,11 +22,28 @@ import java.util.Properties;
  * @date 2017/10/22 21:26
  * @description
  */
-public class HibernateSingletonDao implements Dao{
+public enum HibernateSingletonDao implements Dao{
+    INSTACNE;
 
-    private SessionFactory sessionFactory;
+    private final DataSource dataSource;
 
-    public HibernateSingletonDao(DaoTypeEnum daoTypeEnum) {
+    private final SessionFactory sessionFactory;
+
+    private final HibernateTemplate hibernateTemplate;
+
+    private HibernateSingletonDao() {
+        dataSource = SpringContextUtil.getApplicationContext().getBean("dataSource", DataSource.class);
+        sessionFactory = SpringContextUtil.getApplicationContext().getBean("defaultSessionFactory", SessionFactory.class);
+        hibernateTemplate = new HibernateTemplate(sessionFactory);
+    }
+
+    private Session getSession(){
+        return sessionFactory.getCurrentSession();
+    }
+
+    /*public HibernateSingletonDao(DaoTypeEnum daoTypeEnum) {
+        dataSource = SpringContextUtil.getApplicationContext().getBean("dataSource", DataSource.class);
+
         LocalSessionFactoryBean lsfb = new LocalSessionFactoryBean();
         if(daoTypeEnum.equals(DaoTypeEnum.SINGLETON)){
             DataSource defaultDataSource = SpringContextUtil.getApplicationContext().getBean("defaultDataSource", DataSource.class);
@@ -39,7 +58,7 @@ public class HibernateSingletonDao implements Dao{
         props.put("hibernate.format_sql", "true");
         lsfb.setHibernateProperties(props);
         this.sessionFactory = sessionFactory;
-    }
+    }*/
 
     @Override
     public DaoTypeEnum getType() {

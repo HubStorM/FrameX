@@ -45,8 +45,9 @@ public abstract class Init {
             e.printStackTrace();
             return false;
         }
+        initPersistence();
 
-        client = CuratorHelper.getZkFromFrameConfiguration();
+        /*client = CuratorHelper.getZkFromFrameConfiguration();
         client.start();
 
         try {
@@ -58,7 +59,7 @@ public abstract class Init {
             e.printStackTrace();
         }
 
-        serviceCenter = new ServiceCenter(client);
+        serviceCenter = new ServiceCenter(client);*/
 
         return true;
     }

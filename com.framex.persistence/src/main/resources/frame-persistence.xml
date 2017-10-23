@@ -20,9 +20,9 @@
     </bean>
 
     <!-- 默认sessionFactory -->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+    <bean id="defaultSessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="defaultDynamicDataSource"/>
-        <property name="packagesToScan" value="com.framex.persistence.framexconfig"/>
+        <property name="packagesToScan" value="${persistence.hibernate.entity}"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.show_sql">true</prop>
