@@ -1,4 +1,4 @@
-package com.framex.persistence.dao.hibernate;
+package com.framex.persistence.dao.orm.hibernate;
 
 /**
  * @author lijie

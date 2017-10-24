@@ -1,5 +1,6 @@
-package com.framex.persistence.dao;
+package com.framex.persistence.dao.jdbc;
 
+import com.framex.persistence.dao.DaoTypeEnum;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
@@ -11,11 +12,11 @@ import java.util.Map;
  * @date 2017/9/21 12:45
  * @description dao接口，模块的单例dao或者是之后要增加的多实例的dao都继承此接口。
  */
-public interface Dao {
+public interface JdbcDao {
     DaoTypeEnum getType();
     DataSource getDataSource();
     boolean supportDynamicDataSource();
-    Dao changeDataSource(String dataSourceBeanName);
+    JdbcDao changeDataSource(String dataSourceBeanName);
     boolean supportJdbcTemplate();
     JdbcTemplate getJdbcTemplate();
 
@@ -32,6 +33,5 @@ public interface Dao {
     int update(String sql, Object... args);
     int update(String sql, Object[] args, int[] argTypes);
 
-    <T> void update(T item);
 
 }

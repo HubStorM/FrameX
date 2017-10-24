@@ -77,7 +77,7 @@ public class Test {
                 null);
         DynamicDataSourceHolder.setDataSourceName("dataSourceA");
 
-        //Dao dao = SingletonDao.INSTANCE;
+        //JdbcDao dao = JdbcSingletonDao.INSTANCE;
 
     }
 }

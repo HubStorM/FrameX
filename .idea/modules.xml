@@ -6,7 +6,6 @@
       <module fileurl="file://$PROJECT_DIR$/com.framex.core/com.framex.core.iml" filepath="$PROJECT_DIR$/com.framex.core/com.framex.core.iml" />
       <module fileurl="file://$PROJECT_DIR$/com.framex.daemon/com.framex.daemon.iml" filepath="$PROJECT_DIR$/com.framex.daemon/com.framex.daemon.iml" />
       <module fileurl="file://$PROJECT_DIR$/com.framex.fn/com.framex.fn.iml" filepath="$PROJECT_DIR$/com.framex.fn/com.framex.fn.iml" />
-      <module fileurl="file://$PROJECT_DIR$/com.framex.ipc/com.framex.ipc.iml" filepath="$PROJECT_DIR$/com.framex.ipc/com.framex.ipc.iml" />
       <module fileurl="file://$PROJECT_DIR$/com.framex.mobile/com.framex.mobile.iml" filepath="$PROJECT_DIR$/com.framex.mobile/com.framex.mobile.iml" />
       <module fileurl="file://$PROJECT_DIR$/com.framex.persistence/com.framex.persistence.iml" filepath="$PROJECT_DIR$/com.framex.persistence/com.framex.persistence.iml" />
       <module fileurl="file://$PROJECT_DIR$/com.framex.soa/com.framex.soa.iml" filepath="$PROJECT_DIR$/com.framex.soa/com.framex.soa.iml" />

@@ -1,48 +1,34 @@
-package com.framex.persistence.dao;
+package com.framex.persistence.dao.jdbc.spring;
 
 import com.framex.persistence.SpringContextUtil;
-import com.framex.persistence.datasource.dynamic.DynamicDataSource;
+import com.framex.persistence.dao.DaoTypeEnum;
+import com.framex.persistence.dao.jdbc.JdbcDao;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author lijie
- * @date 2017/9/21 23:11
+ * @date 2017/9/21 12:46
  * @description
  */
-public class PrototypeDao implements Dao{
+public enum JdbcSingletonDao implements JdbcDao {
+    INSTANCE;
 
-    private DynamicDataSource dataSource;
+    private final DataSource dataSource;
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
-    public PrototypeDao() {
-        DataSource defaultDataSource = SpringContextUtil.getApplicationContext().getBean("defaultDataSource", DataSource.class);
-        if(defaultDataSource == null)
-            throw new NullPointerException("PrototypeDao : no Default datasource found");
-        else{
-            dataSource = new DynamicDataSource().setDataSourceHolder("defaultDataSource");
-            jdbcTemplate = new JdbcTemplate(dataSource);
-        }
-    }
-
-    public PrototypeDao(String dataSourceBeanName) {
-        DataSource DataSource = SpringContextUtil.getApplicationContext().getBean(dataSourceBeanName, DataSource.class);
-        if(DataSource == null)
-            throw new NullPointerException("PrototypeDao : no datasource with name " + dataSourceBeanName + "found");
-        else{
-            dataSource = new DynamicDataSource().setDataSourceHolder(dataSourceBeanName);
-            jdbcTemplate = new JdbcTemplate(dataSource);
-        }
+    private JdbcSingletonDao(){
+        dataSource = SpringContextUtil.getApplicationContext().getBean("defaultDataSource", DataSource.class);
+        jdbcTemplate = SpringContextUtil.getApplicationContext().getBean("defaultJdbcTemplate", JdbcTemplate.class);
     }
 
     @Override
     public DaoTypeEnum getType() {
-        return DaoTypeEnum.PROTOTYPE;
+        return DaoTypeEnum.SINGLETON;
     }
 
     @Override
@@ -52,16 +38,14 @@ public class PrototypeDao implements Dao{
 
     @Override
     public boolean supportDynamicDataSource() {
-        return true;
+        return false;
     }
 
     @Override
-    public Dao changeDataSource(String dataSourceBeanName) {
-        if(SpringContextUtil.getApplicationContext().getBean(dataSourceBeanName) == null)
-            throw new NullPointerException("No datasource with name " + dataSourceBeanName + " was found");
-        this.dataSource.setDataSourceHolder(dataSourceBeanName);
-        return this;
+    public JdbcDao changeDataSource(String dataSourceBeanName) {
+        throw new RuntimeException("singleton dao does not support dynamicDataSource");
     }
+
 
     @Override
     public <T> T findObject(String sql, Class<T> requiredType, Object... args) {
@@ -130,5 +114,6 @@ public class PrototypeDao implements Dao{
     public <T> void update(T item) {
 
     }
+
 
 }
