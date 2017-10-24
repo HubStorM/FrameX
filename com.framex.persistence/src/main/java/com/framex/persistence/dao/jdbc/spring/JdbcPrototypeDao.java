@@ -22,7 +22,7 @@ public class JdbcPrototypeDao implements JdbcDao {
     private JdbcTemplate jdbcTemplate;
 
     public JdbcPrototypeDao() {
-        DataSource defaultDataSource = SpringContextUtil.getApplicationContext().getBean("defaultDataSource", DataSource.class);
+        DataSource defaultDataSource = SpringContextUtil.getApplicationContext().getBean("dataSource", DataSource.class);
         if(defaultDataSource == null)
             throw new NullPointerException("JdbcPrototypeDao : no Default datasource found");
         else{
@@ -125,11 +125,6 @@ public class JdbcPrototypeDao implements JdbcDao {
     @Override
     public int update(String sql, Object[] args, int[] argTypes) {
         return jdbcTemplate.update(sql, args, argTypes);
-    }
-
-    @Override
-    public <T> void update(T item) {
-
     }
 
 }

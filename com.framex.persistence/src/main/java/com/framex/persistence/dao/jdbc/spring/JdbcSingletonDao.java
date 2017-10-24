@@ -3,9 +3,11 @@ package com.framex.persistence.dao.jdbc.spring;
 import com.framex.persistence.SpringContextUtil;
 import com.framex.persistence.dao.DaoTypeEnum;
 import com.framex.persistence.dao.jdbc.JdbcDao;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +24,7 @@ public enum JdbcSingletonDao implements JdbcDao {
     private final JdbcTemplate jdbcTemplate;
 
     private JdbcSingletonDao(){
-        dataSource = SpringContextUtil.getApplicationContext().getBean("defaultDataSource", DataSource.class);
+        dataSource = SpringContextUtil.getApplicationContext().getBean("dataSource", DataSource.class);
         jdbcTemplate = SpringContextUtil.getApplicationContext().getBean("defaultJdbcTemplate", JdbcTemplate.class);
     }
 
@@ -49,7 +51,7 @@ public enum JdbcSingletonDao implements JdbcDao {
 
     @Override
     public <T> T findObject(String sql, Class<T> requiredType, Object... args) {
-        return jdbcTemplate.queryForObject(sql, requiredType, args);
+        return jdbcTemplate.queryForObject(sql, args, new BeanPropertyRowMapper<>(requiredType));
     }
 
     @Override
@@ -108,11 +110,6 @@ public enum JdbcSingletonDao implements JdbcDao {
     @Override
     public int update(String sql, Object[] args, int[] argTypes) {
         return jdbcTemplate.update(sql, args, argTypes);
-    }
-
-    @Override
-    public <T> void update(T item) {
-
     }
 
 

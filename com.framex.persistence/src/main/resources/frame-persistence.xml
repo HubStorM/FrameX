@@ -4,6 +4,15 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>classpath:configuration.properties</value>
+        </property>
+        <property name="placeholderPrefix" value="${"></property>
+        <property name="placeholderSuffix" value="}"></property>
+    </bean>
+
+
     <bean id="springContextUtil" class="com.framex.persistence.SpringContextUtil"/>
 
     <!-- 引入业务的数据库配置文件 -->
@@ -21,7 +30,7 @@
 
     <!-- 默认sessionFactory -->
     <bean id="defaultSessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-        <property name="dataSource" ref="defaultDynamicDataSource"/>
+        <property name="dataSource" ref="dataSource"/>
         <property name="packagesToScan" value="${persistence.hibernate.entity}"/>
         <property name="hibernateProperties">
             <props>
@@ -31,8 +40,6 @@
             </props>
         </property>
     </bean>
-
-
 
     <!--<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
        <property name="dataSource" ref="dataSource"/>

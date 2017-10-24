@@ -5,9 +5,11 @@ import com.framex.persistence.dao.DaoTypeEnum;
 import com.framex.persistence.dao.orm.OrmDao;
 import com.framex.persistence.framexconfig.FramexConfig;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
 import javax.sql.DataSource;
@@ -39,6 +41,10 @@ public enum HibernateSingletonDao implements OrmDao{
         return sessionFactory.getCurrentSession();
     }
 
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
     @Override
     public DaoTypeEnum getType() {
         return DaoTypeEnum.SINGLETON;
@@ -56,21 +62,29 @@ public enum HibernateSingletonDao implements OrmDao{
 
     @Override
     public <T> T findObject(String hql, Class<T> requiredType, Object... args) {
-        Query<T> query = getSession().createQuery(hql, requiredType);
-        for(int i = 0; i < args.length; ++i){
-            query.setParameter(i, args[i]);
-        }
-        return query.uniqueResult();
+        return hibernateTemplate.execute(session -> {
+            Query<T> query = session.createQuery(hql, requiredType);
+            for(int i = 0; i < args.length; ++i){
+                query.setParameter(i, args[i]);
+            }
+            return query.uniqueResult();
+        });
     }
 
     @Override
     public <T> List<T> findList(Class<T> requiredType) {
-        return getSession().createCriteria(requiredType).list();
+        return hibernateTemplate.loadAll(requiredType);
     }
 
     @Override
     public <T> List<T> findList(String hql, Class<T> requiredType, Object... args) {
-        return null;
+        return hibernateTemplate.execute(session -> {
+            Query<T> query = session.createQuery(hql, requiredType);
+            for(int i = 0; i < args.length; ++i){
+                query.setParameter(i, args[i]);
+            }
+            return query.list();
+        });
     }
 
     @Override

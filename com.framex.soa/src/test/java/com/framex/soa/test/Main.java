@@ -9,4 +9,7 @@ import org.apache.curator.framework.recipes.cache.PathChildrenCache;
  * @description
  */
 public class Main {
+    public static void main(String... args) {
+
+    }
 }
