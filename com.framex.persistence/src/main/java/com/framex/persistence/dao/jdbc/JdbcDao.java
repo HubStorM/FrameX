@@ -30,8 +30,8 @@ public interface JdbcDao {
     List<Map<String, Object>> findList(String sql, Object... args);
     List<Map<String, Object>> findList(String sql, Object[] args, int[] argTypes);
 
-    int update(String sql, Object... args);
-    int update(String sql, Object[] args, int[] argTypes);
+    int execute(String sql, Object... args);
+    int execute(String sql, Object[] args, int[] argTypes);
 
 
 }

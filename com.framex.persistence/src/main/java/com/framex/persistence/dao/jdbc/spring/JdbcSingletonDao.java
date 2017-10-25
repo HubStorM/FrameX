@@ -69,7 +69,7 @@ public enum JdbcSingletonDao implements JdbcDao {
 
     @Override
     public <T> T findObject(String sql, Object[] args, int[] argTypes, Class<T> requiredType) {
-        return jdbcTemplate.queryForObject(sql, args, argTypes, requiredType);
+        return jdbcTemplate.queryForObject(sql, args, argTypes, new BeanPropertyRowMapper<>(requiredType));
     }
 
     @Override
@@ -103,12 +103,12 @@ public enum JdbcSingletonDao implements JdbcDao {
     }
 
     @Override
-    public int update(String sql, Object... args) {
+    public int execute(String sql, Object... args) {
         return jdbcTemplate.update(sql, args);
     }
 
     @Override
-    public int update(String sql, Object[] args, int[] argTypes) {
+    public int execute(String sql, Object[] args, int[] argTypes) {
         return jdbcTemplate.update(sql, args, argTypes);
     }
 

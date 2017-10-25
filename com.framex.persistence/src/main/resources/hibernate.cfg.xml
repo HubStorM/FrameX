@@ -4,8 +4,8 @@
     "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="connection.url">jdbc:mysql://localhost:3306/framex</property>
-    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+      <property name="connection.url">jdbc:mysql://localhost:3306/framex</property>
+      <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
       <mapping class="com.framex.persistence.framexconfig.FramexModule"/>
   </session-factory>
 </hibernate-configuration>

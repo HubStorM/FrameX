@@ -3,14 +3,14 @@ package com.framex.persistence.dao.orm.hibernate;
 import com.framex.persistence.SpringContextUtil;
 import com.framex.persistence.dao.DaoTypeEnum;
 import com.framex.persistence.dao.orm.OrmDao;
-import com.framex.persistence.framexconfig.FramexConfig;
 import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
+import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.springframework.orm.hibernate5.HibernateCallback;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.io.Serializable;
@@ -34,15 +34,12 @@ public enum HibernateSingletonDao implements OrmDao{
         dataSource = SpringContextUtil.getApplicationContext().getBean("dataSource", DataSource.class);
         sessionFactory = SpringContextUtil.getApplicationContext().getBean("defaultSessionFactory", SessionFactory.class);
         hibernateTemplate = new HibernateTemplate(sessionFactory);
+        hibernateTemplate.setCheckWriteOperations(false);
 
     }
 
     private Session getSession(){
         return sessionFactory.getCurrentSession();
-    }
-
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
     }
 
     @Override
@@ -88,8 +85,27 @@ public enum HibernateSingletonDao implements OrmDao{
     }
 
     @Override
-    public <T> void save(T item) {
-        hibernateTemplate.save(item);
+    public <T> List<T> findList(int currentPage, int pageSize, Class<T> requiredType) {
+        return hibernateTemplate.execute(session -> {
+            Criteria criteria = session.createCriteria(requiredType).setFirstResult((currentPage - 1) * pageSize).setMaxResults(pageSize);
+            return criteria.list();
+        });
+    }
+
+    @Override
+    public <T> List<T> findList(int currentPage, int pageSize, String hql, Class<T> requiredType, Object... args) {
+        return hibernateTemplate.execute(session -> {
+            Query<T> query = session.createQuery(hql, requiredType).setFirstResult((currentPage - 1) * pageSize).setMaxResults(pageSize);
+            for(int i = 0; i < args.length; ++i){
+                query.setParameter(i, args[i]);
+            }
+            return query.list();
+        });
+    }
+
+    @Override
+    public <T> Serializable save(T item) {
+        return hibernateTemplate.save(item);
     }
 
     @Override
