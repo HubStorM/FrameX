@@ -103,6 +103,26 @@ public enum JdbcSingletonDao implements JdbcDao {
     }
 
     @Override
+    public <T> int insert(T item) {
+        return 0;
+    }
+
+    @Override
+    public <T> int update(T item) {
+        return 0;
+    }
+
+    @Override
+    public <T> int delete(T item) {
+        return 0;
+    }
+
+    @Override
+    public <T> int delete(Class<T> requiredType, String key) {
+        return 0;
+    }
+
+    @Override
     public int execute(String sql, Object... args) {
         return jdbcTemplate.update(sql, args);
     }
@@ -111,6 +131,9 @@ public enum JdbcSingletonDao implements JdbcDao {
     public int execute(String sql, Object[] args, int[] argTypes) {
         return jdbcTemplate.update(sql, args, argTypes);
     }
+
+
+
 
 
 }
