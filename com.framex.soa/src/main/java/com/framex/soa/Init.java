@@ -1,6 +1,7 @@
 package com.framex.soa;
 
 import com.framex.core.constant.ZookeeperConstant;
+import com.framex.persistence.dao.jdbc.BeanInfoHelper;
 import com.framex.persistence.framexconfig.Configuration;
 import com.framex.persistence.framexconfig.ConfigurationHolder;
 import com.framex.soa.zookeeper.CuratorHelper;
@@ -70,6 +71,7 @@ public abstract class Init {
     private void initPersistence(){
         ClassPathResource modulePersistence = new ClassPathResource("persistence.xml");
         assert !modulePersistence.exists();
+        BeanInfoHelper.analysisPackage(ConfigurationHolder.getConfiguration().getModule().getServicePackageName() + ".domain");
         new ClassPathXmlApplicationContext("frame-persistence.xml");
     }
 

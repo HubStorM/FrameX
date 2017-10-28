@@ -127,4 +127,23 @@ public class JdbcPrototypeDao implements JdbcDao {
         return jdbcTemplate.update(sql, args, argTypes);
     }
 
+    @Override
+    public <T> int insert(T item) {
+        return 0;
+    }
+
+    @Override
+    public <T> int update(T item) {
+        return 0;
+    }
+
+    @Override
+    public <T> int delete(T item) {
+        return 0;
+    }
+
+    @Override
+    public <T> int delete(Class<T> requiredType, String key) {
+        return 0;
+    }
 }
