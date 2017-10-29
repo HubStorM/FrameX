@@ -34,8 +34,7 @@ public enum HibernateSingletonDao implements OrmDao{
         dataSource = SpringContextUtil.getApplicationContext().getBean("dataSource", DataSource.class);
         sessionFactory = SpringContextUtil.getApplicationContext().getBean("defaultSessionFactory", SessionFactory.class);
         hibernateTemplate = new HibernateTemplate(sessionFactory);
-        hibernateTemplate.setCheckWriteOperations(false);
-
+        //hibernateTemplate.setCheckWriteOperations(false);
     }
 
     private Session getSession(){

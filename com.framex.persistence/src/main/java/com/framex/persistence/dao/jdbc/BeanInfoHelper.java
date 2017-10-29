@@ -1,22 +1,19 @@
 package com.framex.persistence.dao.jdbc;
 
-import com.framex.persistence.framexconfig.ConfigurationHolder;
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
-import org.reflections.util.FilterBuilder;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author lijie
@@ -27,10 +24,8 @@ public class BeanInfoHelper {
     private static final Map<Class<?>, SingletonBeanInfo> cache =  BeanInfoCache.INSTANCE.getCache();
 
     public static void analysisPackage(String packageName){
-        Reflections reflections = new Reflections(new ConfigurationBuilder()
-                .setUrls(ClasspathHelper.forPackage(packageName))
-                .setScanners(new SubTypesScanner(false)));
-        Set<Class<?>> allClasses = reflections.getSubTypesOf(Object.class);
+        Reflections reflections = new Reflections(packageName);
+        Set<Class<?>> allClasses = reflections.getTypesAnnotatedWith(Entity.class);
         allClasses.forEach(BeanInfoHelper::analysisBean);
     }
 
@@ -45,8 +40,9 @@ public class BeanInfoHelper {
             Set<Method> readMethods = new HashSet<>();
             Set<Method> writeMethods = new HashSet<>();
 
-            BeanInfo beanInfo = Introspector.getBeanInfo(beanType);
+            BeanInfo beanInfo = Introspector.getBeanInfo(beanType, Object.class);
             PropertyDescriptor[] pds = beanInfo.getPropertyDescriptors();
+
             for(PropertyDescriptor item : pds){
                 String propertyName = item.getName();
                 Method readMethod = item.getReadMethod();
@@ -61,6 +57,14 @@ public class BeanInfoHelper {
             singletonBeanInfo.setReadWritePairMap(map);
             singletonBeanInfo.setReadMethods(readMethods);
             singletonBeanInfo.setWriteMethods(writeMethods);
+
+            Table table = beanType.getDeclaredAnnotation(Table.class);
+            if(table == null){
+                singletonBeanInfo.setTableName(beanType.getSimpleName().toLowerCase());
+            }
+            else{
+                singletonBeanInfo.setTableName(table.name());
+            }
 
             cache.put(beanType, singletonBeanInfo);
         } catch (IntrospectionException e) {
@@ -86,6 +90,14 @@ public class BeanInfoHelper {
 
     public static String getBeanName(Class<?> beanType){
         return cache.get(beanType).getBeanName();
+    }
+
+    public static String getTableName(Class<?> beanType){
+        return cache.get(beanType).getTableName();
+    }
+
+    public static SingletonBeanInfo getSingletonBeanInfo(Class<?> beanType){
+        return cache.get(beanType);
     }
 
 

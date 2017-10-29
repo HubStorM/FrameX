@@ -17,6 +17,9 @@ public class SingletonBeanInfo {
     private Set<Method> writeMethods;
     private Map<String, ReadWritePair> readWritePairMap;
     private String primaryKeyName;
+    private String tableName;
+    private String insertSql;
+    private String updateSql;
 
     public Class<?> getBeanClass() {
         return beanClass;
@@ -66,6 +69,15 @@ public class SingletonBeanInfo {
         this.primaryKeyName = primaryKeyName;
     }
 
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
+
+
 
     @Override
     public String toString() {
@@ -76,6 +88,7 @@ public class SingletonBeanInfo {
                 ", writeMethods=" + writeMethods +
                 ", readWritePairMap=" + readWritePairMap +
                 ", primaryKeyName='" + primaryKeyName + '\'' +
+                ", tableName='" + tableName + '\'' +
                 '}';
     }
 }
