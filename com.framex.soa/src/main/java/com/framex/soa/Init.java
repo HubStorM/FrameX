@@ -4,6 +4,7 @@ import com.framex.core.constant.ZookeeperConstant;
 import com.framex.persistence.dao.jdbc.BeanInfoHelper;
 import com.framex.persistence.framexconfig.Configuration;
 import com.framex.persistence.framexconfig.ConfigurationHolder;
+import com.framex.soa.service.ServiceCenter;
 import com.framex.soa.zookeeper.CuratorHelper;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
@@ -11,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.util.Assert;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.IOException;
@@ -46,9 +46,8 @@ public abstract class Init {
             e.printStackTrace();
             return false;
         }
-        initPersistence();
 
-        /*client = CuratorHelper.getZkFromFrameConfiguration();
+        client = CuratorHelper.getZkFromFrameConfiguration();
         client.start();
 
         try {
@@ -60,7 +59,7 @@ public abstract class Init {
             e.printStackTrace();
         }
 
-        serviceCenter = new ServiceCenter(client);*/
+        serviceCenter = new ServiceCenter(client);
 
         return true;
     }

@@ -1,4 +1,4 @@
-package com.framex.soa;
+package com.framex.soa.service;
 
 public class ServiceHolder {
     private static class ServiceLoader{
