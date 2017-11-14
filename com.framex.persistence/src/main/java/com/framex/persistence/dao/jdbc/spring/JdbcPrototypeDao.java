@@ -132,6 +132,15 @@ public class JdbcPrototypeDao implements JdbcDao {
     }
 
 
+    @Override
+    public <T> List<T> findList(Class<T> requiredType) {
+        return null;
+    }
+
+    @Override
+    public <T> List<T> findList(int currentPage, int pageSize, Class<T> requiredType) {
+        return null;
+    }
 
     /**
      * 多数据库分页支持

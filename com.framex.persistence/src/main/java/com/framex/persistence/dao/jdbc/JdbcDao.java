@@ -32,6 +32,10 @@ public interface JdbcDao {
     List<Map<String, Object>> findList(String sql, Object... args);
     List<Map<String, Object>> findList(String sql, Object[] args, int[] argTypes);
 
+    <T> List<T> findList(Class<T> requiredType);
+
+    <T> List<T> findList(int currentPage, int pageSize, Class<T> requiredType);
+
     <T> List<T> findList(String sql, int currentPage, int pageSize, Class<T> requiredType, Object... args);
     <T> List<T> findList(String sql, int currentPage, int pageSize,  Object[] args, int[] argTypes, Class<T> requiredType);
     List<Map<String, Object>> findList(String sql, int currentPage, int pageSize,  Object... args);

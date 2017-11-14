@@ -117,6 +117,20 @@ public enum JdbcSingletonDao implements JdbcDao {
         return jdbcTemplate.queryForList(sql, args, argTypes);
     }
 
+    @Override
+    public <T> List<T> findList(Class<T> requiredType) {
+        SingletonBeanInfo beanInfo = BeanInfoHelper.getSingletonBeanInfo(requiredType);
+        String sql = "SELECT * FROM " + beanInfo.getTableName();
+        return findList(sql, requiredType, null);
+    }
+
+    @Override
+    public <T> List<T> findList(int currentPage, int pageSize, Class<T> requiredType) {
+        SingletonBeanInfo beanInfo = BeanInfoHelper.getSingletonBeanInfo(requiredType);
+        String sql = "SELECT * FROM " + beanInfo.getTableName();
+        return findList(sql, currentPage, pageSize, requiredType, null);
+    }
+
 
     /**
      * 多数据库分页支持
