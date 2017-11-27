@@ -9,12 +9,12 @@ import java.lang.annotation.*;
  * @description
  */
 
-@Target(ElementType.TYPE)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Service {
+public @interface One2OneAsyncService {
 
-    String group() default "defaultGroup";
+    String name();
 
     String version();
 

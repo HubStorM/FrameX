@@ -4,7 +4,8 @@ import com.framex.persistence.framexconfig.ConfigurationHolder;
 import org.apache.curator.framework.CuratorFramework;
 import org.reflections.Reflections;
 
-import javax.persistence.Entity;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.util.Set;
 
 public class ServiceCenter{
@@ -19,7 +20,23 @@ public class ServiceCenter{
         String servicePackageName = ConfigurationHolder.getConfiguration().getModule().getServicePackageName();
         Reflections reflections = new Reflections(servicePackageName + ".api");
         Set<Class<?>> allClasses = reflections.getTypesAnnotatedWith(Service.class);
-        for(Class<?> item : allClasses){
+        for(Class<?> serviceClass : allClasses){
+            Service serviceGroup = serviceClass.getDeclaredAnnotation(Service.class);
+            String group = serviceGroup.group();
+            String groupVersion = serviceGroup.version();
+            Method[] methods = serviceClass.getDeclaredMethods();
+            for(Method method : methods){
+                Annotation[] annotations = method.getDeclaredAnnotations();
+                if(annotations != null){
+                    for (Annotation annotation : annotations) {
+                        if(annotation.annotationType().equals(One2OneAsyncService.class)){
+
+                        }
+                    }
+                }
+
+            }
+
         }
 
     }
