@@ -54,12 +54,20 @@ public abstract class Init {
             initPersistence();
             initServiceCenterRootNode(client);
             initModuleRootNode(client);
-            initDefaultGroupNode(client);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         serviceCenter = new ServiceCenter(client);
+        try {
+            serviceCenter.scanLocalService();
+        } catch (Exception e) {
+            log.error("Scan local service error.");
+            e.printStackTrace();
+        }
+
+
+
 
         return true;
     }

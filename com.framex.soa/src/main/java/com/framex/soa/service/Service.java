@@ -14,7 +14,9 @@ import java.lang.annotation.*;
 @Documented
 public @interface Service {
 
-    String group() default "defaultGroup";
+    Class<?> target();
+
+    String name();
 
     String version();
 
