@@ -51,7 +51,10 @@ public class ServiceCenter {
 
                 String serviceNode = zookeeper.get("serviceRoot") + ConfigurationHolder.getConfiguration().getModule().getModuleUri() + "/" + name;
                 FramexModule module = ConfigurationHolder.getConfiguration().getModule();
-                String serviceNodeData = "moduleIp=" + module.getModuleIp() + ";modulePort=" + module.getModulePort() + ";moduleUri=" + module.getModuleUri();
+                String serviceNodeData = "moduleIp=" + module.getModuleIp()
+                        + ";modulePort=" + module.getModulePort()
+                        + ";moduleUri=" + module.getModuleUri()
+                        + ";rpcPort=" + module.getRpcPort();
 
                 InterProcessMutex lock = new InterProcessMutex(client, serviceNode);
                 if (lock.acquire(1000 * 5, TimeUnit.MILLISECONDS)) {
@@ -74,6 +77,7 @@ public class ServiceCenter {
                 registerService(name, version, target, serviceClass.newInstance());
             }
         }
+        startLocalServiceServer(Integer.parseInt(ConfigurationHolder.getConfiguration().getModule().getRpcPort()));
     }
 
 
@@ -100,7 +104,7 @@ public class ServiceCenter {
                 if ("moduleIp".equals(nodeKeyAndValue[0])) {
                     host = nodeKeyAndValue[1];
                 }
-                if ("modulePort".equals(nodeKeyAndValue[0])) {
+                if ("rpcPort".equals(nodeKeyAndValue[0])) {
                     port = Integer.valueOf(nodeKeyAndValue[1]);
                 }
             }

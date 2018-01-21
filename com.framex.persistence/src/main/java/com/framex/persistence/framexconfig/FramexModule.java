@@ -15,6 +15,7 @@ public class FramexModule {
     private String moduleUri;
     private String moduleIp;
     private String modulePort;
+    private String rpcPort;
     private String servicePackageName;
     private String version;
 
@@ -100,11 +101,10 @@ public class FramexModule {
         if (moduleUri != null ? !moduleUri.equals(that.moduleUri) : that.moduleUri != null) return false;
         if (moduleIp != null ? !moduleIp.equals(that.moduleIp) : that.moduleIp != null) return false;
         if (modulePort != null ? !modulePort.equals(that.modulePort) : that.modulePort != null) return false;
+        if (rpcPort != null ? !rpcPort.equals(that.rpcPort) : that.rpcPort != null) return false;
         if (servicePackageName != null ? !servicePackageName.equals(that.servicePackageName) : that.servicePackageName != null)
             return false;
-        if (version != null ? !version.equals(that.version) : that.version != null) return false;
-
-        return true;
+        return version != null ? version.equals(that.version) : that.version == null;
     }
 
     @Override
@@ -114,8 +114,19 @@ public class FramexModule {
         result = 31 * result + (moduleUri != null ? moduleUri.hashCode() : 0);
         result = 31 * result + (moduleIp != null ? moduleIp.hashCode() : 0);
         result = 31 * result + (modulePort != null ? modulePort.hashCode() : 0);
+        result = 31 * result + (rpcPort != null ? rpcPort.hashCode() : 0);
         result = 31 * result + (servicePackageName != null ? servicePackageName.hashCode() : 0);
         result = 31 * result + (version != null ? version.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "RpcPort")
+    public String getRpcPort() {
+        return rpcPort;
+    }
+
+    public void setRpcPort(String rpcPort) {
+        this.rpcPort = rpcPort;
     }
 }
